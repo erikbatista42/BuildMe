@@ -11,8 +11,11 @@
 /*
  - Setup project with folders and stuff
  - Setup to make it programming only. No storyboard.
- -
+ - Install Firebase with Cocoapods
 */
+
+
+
 
 
 
@@ -37,8 +40,9 @@
  
      -> [Firebase]
          - Fetch Videos based on selected category
-         - 
+         -
 */
+
 
 
 

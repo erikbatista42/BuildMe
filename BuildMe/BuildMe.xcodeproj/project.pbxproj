@@ -99,13 +99,10 @@
 		FEF87DB421976A1900EFAD77 /* BuildMe */ = {
 			isa = PBXGroup;
 			children = (
-				FEF87DB521976A1900EFAD77 /* AppDelegate.swift */,
-				FEF87DE321976BBF00EFAD77 /* Docs.string.swift */,
-				FEF87DB721976A1900EFAD77 /* ViewController.swift */,
-				FEF87DB921976A1900EFAD77 /* Main.storyboard */,
-				FEF87DBC21976A1A00EFAD77 /* Assets.xcassets */,
-				FEF87DBE21976A1A00EFAD77 /* LaunchScreen.storyboard */,
-				FEF87DC121976A1A00EFAD77 /* Info.plist */,
+				FEF87DE721976F3300EFAD77 /* Singletons */,
+				FEF87DEB21976FD700EFAD77 /* App Design */,
+				FEF87DE621976EFB00EFAD77 /* Google */,
+				FEF87DE521976EF200EFAD77 /* Resources */,
 			);
 			path = BuildMe;
 			sourceTree = "<group>";
@@ -126,6 +123,65 @@
 				FEF87DD721976A1A00EFAD77 /* Info.plist */,
 			);
 			path = BuildMeUITests;
+			sourceTree = "<group>";
+		};
+		FEF87DE521976EF200EFAD77 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEF87DB921976A1900EFAD77 /* Main.storyboard */,
+				FEF87DBE21976A1A00EFAD77 /* LaunchScreen.storyboard */,
+				FEF87DBC21976A1A00EFAD77 /* Assets.xcassets */,
+				FEF87DC121976A1A00EFAD77 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FEF87DE621976EFB00EFAD77 /* Google */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Google;
+			sourceTree = "<group>";
+		};
+		FEF87DE721976F3300EFAD77 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				FEF87DB521976A1900EFAD77 /* AppDelegate.swift */,
+				FEF87DE321976BBF00EFAD77 /* Docs.string.swift */,
+			);
+			path = Singletons;
+			sourceTree = "<group>";
+		};
+		FEF87DE821976F9E00EFAD77 /* M */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = M;
+			sourceTree = "<group>";
+		};
+		FEF87DE921976FA600EFAD77 /* V */ = {
+			isa = PBXGroup;
+			children = (
+				FEF87DB721976A1900EFAD77 /* ViewController.swift */,
+			);
+			path = V;
+			sourceTree = "<group>";
+		};
+		FEF87DEA21976FAB00EFAD77 /* C */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
+		FEF87DEB21976FD700EFAD77 /* App Design */ = {
+			isa = PBXGroup;
+			children = (
+				FEF87DE821976F9E00EFAD77 /* M */,
+				FEF87DE921976FA600EFAD77 /* V */,
+				FEF87DEA21976FAB00EFAD77 /* C */,
+			);
+			path = "App Design";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,7 +494,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DFUU36AARG;
-				INFOPLIST_FILE = BuildMe/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/BuildMe/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,7 +512,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DFUU36AARG;
-				INFOPLIST_FILE = BuildMe/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/BuildMe/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
