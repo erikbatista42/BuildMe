@@ -24,7 +24,6 @@
  
  [View One (Main Screen with Categories)]
     -> [Design]
-         - Add Navigation Bar
          - Set up Nav Bar Icons (settings, Logo, Add)
          - Setup Collection View
          - setup another
