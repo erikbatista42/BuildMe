@@ -13,21 +13,45 @@ class MainController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
 
     var collectionView: UICollectionView!
-    let flowLayout = UICollectionViewLayout()
+    let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-//        collectionView.register
+        collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
+        view.addSubview(collectionView)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .white
+        
+        collectionView?.showsVerticalScrollIndicator = false
+        
         setupNavBar()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 2.1) / 2.1
+        return CGSize(width: width, height: 180)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        
+        cell.backgroundColor = .red
+        // Makes cell corners round
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 15
         return cell
     }
     
