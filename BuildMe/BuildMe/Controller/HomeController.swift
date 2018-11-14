@@ -26,36 +26,17 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         
+        /*We break them into function to:
+        - Avoid polluting viewDidLoad
+        - making the code more organizable
+         */
         setupCollectionView()
-        setupNavBar()
-    }
-    
-    func setupCollectionView() {
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
-        
-        // Use this property to extend the space between your content and the edges of the content view.
-        collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
-        
-        // method to tell the collection view how to create a new cell of the given type
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        
-        // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
-        collectionView.delegate = self
-        
-        // The dataSource is the customization of a cell (color, height, width, rounded corners etc..
-        collectionView.dataSource = self
-        
-        collectionView.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-    
-        // hides vertical scroll bar  - it shows (true) by default
-        collectionView?.showsVerticalScrollIndicator = false
-        
-        //  Here, we add the collectionVIEW as a subview. You can only have one superView. We're adding a subView to the superView. Check this out to get a better understanding: https://goo.gl/images/TQ4mti
-        view.addSubview(collectionView)
+        setupNavigationController()
     }
     
 
@@ -88,7 +69,31 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return cell
     }
     
-    func setupNavBar() {
+    func setupCollectionView() {
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
+        
+        // Use this property to extend the space between your content and the edges of the content view.
+        collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
+        
+        // method to tell the collection view how to create a new cell of the given type
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
+        collectionView.delegate = self
+        
+        // The dataSource is the customization of a cell (color, height, width, rounded corners etc..
+        collectionView.dataSource = self
+        
+        collectionView.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        
+        // hides vertical scroll bar  - it shows (true) by default
+        collectionView?.showsVerticalScrollIndicator = false
+        
+        //  Here, we add the collectionVIEW as a subview. You can only have one superView. We're adding a subView to the superView. Check this out to get a better understanding: https://goo.gl/images/TQ4mti
+        view.addSubview(collectionView)
+    }
+    
+    func setupNavigationController() {
         let navBar = navigationController?.navigationBar
         navBar?.isTranslucent = false
         self.navigationItem.title = "BuildMe"
