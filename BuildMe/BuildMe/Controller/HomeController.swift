@@ -89,7 +89,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         // hides vertical scroll bar  - it shows (true) by default
         collectionView?.showsVerticalScrollIndicator = false
         
-        //  Here, we add the collectionVIEW as a subview. You can only have one superView. We're adding a subView to the superView. Check this out to get a better understanding: https://goo.gl/images/TQ4mti
+        //  Here, we add the collectionView as a subview to the superView. You can only have one superView. Check this out to get a better understanding of what this comment is trying to say: https://goo.gl/images/TQ4mti
         view.addSubview(collectionView)
     }
     
