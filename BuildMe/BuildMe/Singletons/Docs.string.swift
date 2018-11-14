@@ -11,7 +11,6 @@
  Next steps:
  
  Features:
-    • Collection Views
         - setup Firebase
  Bugs:
  */
