@@ -71,16 +71,11 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height
-        let calc = view.bounds.height - navBarSize! - 12.5
-        let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: calc)
+        let calculateHeightOfCollectionView = view.bounds.height - navBarSize! - 12.5
+        let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: calculateHeightOfCollectionView)
         collectionView = UICollectionView(frame: frame, collectionViewLayout: flowLayout)
         
-        
-        
         // Use this property to extend the space between your content and the edges of the content view.
-        
-        
-//        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         
         collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
         
