@@ -100,7 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				FEF87DE721976F3300EFAD77 /* Singletons */,
-				FEF87DEB21976FD700EFAD77 /* MVC */,
+				FEF87DE821976F9E00EFAD77 /* Model */,
+				FEF87DE921976FA600EFAD77 /* View */,
+				FEF87DEA21976FAB00EFAD77 /* Controller */,
 				FEF87DE521976EF200EFAD77 /* Resources */,
 			);
 			path = BuildMe;
@@ -144,36 +146,26 @@
 			path = Singletons;
 			sourceTree = "<group>";
 		};
-		FEF87DE821976F9E00EFAD77 /* M */ = {
+		FEF87DE821976F9E00EFAD77 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = M;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		FEF87DE921976FA600EFAD77 /* V */ = {
+		FEF87DE921976FA600EFAD77 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FEF87DEA21976FAB00EFAD77 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				FEF87DB721976A1900EFAD77 /* HomeController.swift */,
 			);
-			path = V;
-			sourceTree = "<group>";
-		};
-		FEF87DEA21976FAB00EFAD77 /* C */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = C;
-			sourceTree = "<group>";
-		};
-		FEF87DEB21976FD700EFAD77 /* MVC */ = {
-			isa = PBXGroup;
-			children = (
-				FEF87DE821976F9E00EFAD77 /* M */,
-				FEF87DE921976FA600EFAD77 /* V */,
-				FEF87DEA21976FAB00EFAD77 /* C */,
-			);
-			path = MVC;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

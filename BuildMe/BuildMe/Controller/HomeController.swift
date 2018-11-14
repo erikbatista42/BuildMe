@@ -87,7 +87,6 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
     }
-
     
     func setupNavBar() {
         let navBar = navigationController?.navigationBar
