@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FEF87DB621976A1900EFAD77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF87DB521976A1900EFAD77 /* AppDelegate.swift */; };
 		FEF87DB821976A1900EFAD77 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF87DB721976A1900EFAD77 /* HomeController.swift */; };
-		FEF87DBB21976A1900EFAD77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEF87DB921976A1900EFAD77 /* Main.storyboard */; };
 		FEF87DBD21976A1A00EFAD77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEF87DBC21976A1A00EFAD77 /* Assets.xcassets */; };
 		FEF87DC021976A1A00EFAD77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEF87DBE21976A1A00EFAD77 /* LaunchScreen.storyboard */; };
 		FEF87DCB21976A1A00EFAD77 /* BuildMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF87DCA21976A1A00EFAD77 /* BuildMeTests.swift */; };
@@ -38,7 +37,6 @@
 		FEF87DB221976A1900EFAD77 /* BuildMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEF87DB521976A1900EFAD77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEF87DB721976A1900EFAD77 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		FEF87DBA21976A1900EFAD77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FEF87DBC21976A1A00EFAD77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FEF87DBF21976A1A00EFAD77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FEF87DC121976A1A00EFAD77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,8 +99,8 @@
 			children = (
 				FEF87DE721976F3300EFAD77 /* Singletons */,
 				FEF87DE821976F9E00EFAD77 /* Model */,
-				FEF87DE921976FA600EFAD77 /* View */,
 				FEF87DEA21976FAB00EFAD77 /* Controller */,
+				FEF87DE921976FA600EFAD77 /* View */,
 				FEF87DE521976EF200EFAD77 /* Resources */,
 			);
 			path = BuildMe;
@@ -129,7 +127,6 @@
 		FEF87DE521976EF200EFAD77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FEF87DB921976A1900EFAD77 /* Main.storyboard */,
 				FEF87DBE21976A1A00EFAD77 /* LaunchScreen.storyboard */,
 				FEF87DBC21976A1A00EFAD77 /* Assets.xcassets */,
 				FEF87DC121976A1A00EFAD77 /* Info.plist */,
@@ -274,7 +271,6 @@
 			files = (
 				FEF87DC021976A1A00EFAD77 /* LaunchScreen.storyboard in Resources */,
 				FEF87DBD21976A1A00EFAD77 /* Assets.xcassets in Resources */,
-				FEF87DBB21976A1900EFAD77 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,14 +333,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FEF87DB921976A1900EFAD77 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FEF87DBA21976A1900EFAD77 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FEF87DBE21976A1A00EFAD77 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

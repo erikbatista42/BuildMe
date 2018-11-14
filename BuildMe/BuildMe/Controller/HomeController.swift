@@ -18,11 +18,11 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
      What is UICollectionViewDataSource?
         • Is responsible for providing the data and views required by a collection view.
         • A data source object represents your app’s data model and vends information to the collection view as needed.
- 
     */
     
     // We declare collectionView as a global variable here because we might mess around with the collection view in different functions
     var collectionView: UICollectionView!
+    
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
@@ -74,18 +74,18 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return 10
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
         cell.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        
         // Makes cell corners round
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
     }
     
     func setupNavBar() {
