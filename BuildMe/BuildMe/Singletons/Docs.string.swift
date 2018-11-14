@@ -7,45 +7,14 @@
 //
 
 
-        // [Setup]
 /*
- - Setup project with folders and stuff √
- - Setup to make it programming only. No storyboard. √
- - Install Firebase with Cocoapods
-*/
-
-
-
-
-
-
-        // [To Do]
-/*
+ Next steps:
  
- [View One (Main Screen with Categories)]
-    -> [Design]
-         - Set up Nav Bar Icons (settings, Logo, Add)
-         - Setup Collection View √
-         - When clicked on Add Icon, camera shows up so you can start recording and then edit when finished
- 
-    -> [Firebase]
-         - Fetch uploaded videos
-         -
- 
- [View Two Design (Selected Category)]
-         - Setup Collection View
-         - Back button works
- 
-     -> [Firebase]
-         - Fetch Videos based on selected category
-         -
-*/
-
-
-
-
-
-        // [Problems ran into/learned]
-/*
- -
-*/
+ Features:
+    • Collection Views
+        - When pressed on an especific cell, print something unique for each cell
+        - After that, when a cell is pressed, push to another collection view ( like design doc)
+ Bugs:
+    • Collection Views
+        - Collection View doesn't scroll all the way down [MainController.swift]
+ */
