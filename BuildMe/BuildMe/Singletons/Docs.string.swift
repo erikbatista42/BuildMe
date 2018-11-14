@@ -9,8 +9,8 @@
 
         // [Setup]
 /*
- - Setup project with folders and stuff
- - Setup to make it programming only. No storyboard.
+ - Setup project with folders and stuff √
+ - Setup to make it programming only. No storyboard. √
  - Install Firebase with Cocoapods
 */
 
@@ -25,8 +25,7 @@
  [View One (Main Screen with Categories)]
     -> [Design]
          - Set up Nav Bar Icons (settings, Logo, Add)
-         - Setup Collection View
-         - setup another
+         - Setup Collection View √
          - When clicked on Add Icon, camera shows up so you can start recording and then edit when finished
  
     -> [Firebase]
