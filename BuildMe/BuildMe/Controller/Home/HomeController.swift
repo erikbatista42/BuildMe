@@ -23,6 +23,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     // We declare collectionView as a global variable here because we might mess around with the collection view in different functions
     var collectionView: UICollectionView!
+    let collectionViewCell = HomeControllerCollectionViewCell()
     
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
@@ -66,12 +67,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        
-        // Makes cell corners round
-        cell.layer.masksToBounds = true
-        cell.layer.cornerRadius = 15
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
         return cell
     }
     
@@ -85,7 +81,8 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
         
         // method to tell the collection view how to create a new cell of the given type
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        collectionView.register(HomeControllerCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
         // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
         collectionView.delegate = self
