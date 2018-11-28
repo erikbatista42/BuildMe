@@ -23,7 +23,6 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     // We declare collectionView as a global variable here because we might mess around with the collection view in different functions
     var collectionView: UICollectionView!
-    let collectionViewCell = HomeControllerCollectionViewCell()
     
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
@@ -62,12 +61,16 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return 10
     }
     
+    let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
+        cell.categoryLabel.text = categories[indexPath.row]
+        
         return cell
     }
     

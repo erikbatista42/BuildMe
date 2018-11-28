@@ -122,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				FEF87DB721976A1900EFAD77 /* HomeController.swift */,
-				FE1E2E7E21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -217,6 +216,7 @@
 		FEF87DE921976FA600EFAD77 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FE1E2E7E21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
