@@ -8,37 +8,101 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+import MobileCoreServices
 
-class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate, getSelectedCategoryText {
 
+    
+
+
+    let imagePicker: UIImagePickerController! = UIImagePickerController()
+     let saveFileName = "/test.mp4"
     
     var collectionView: UICollectionView!
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBtn))
         
         setupCollectionView()
+        
+    }
+    
+    func getCategory(text: String) {
+        print(123)
+        print("Category selected: " + text)
+    }
+    
+    func postAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func handleAddVideoBtn() {
+        let activityViewController = UIAlertController()
+        
+        let contactCreaterButton = UIAlertAction(title: "Shoot a tutorial 📹", style: .default, handler: { (action) -> Void in
+            if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+                if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
+                    
+                    //if the camera is available, and if the rear camera is available, the let the image picker do this
+                    self.imagePicker.sourceType = .camera
+                    self.imagePicker.mediaTypes = [kUTTypeMovie as String]
+                    self.imagePicker.allowsEditing = true
+                    self.imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+                    self.imagePicker.videoMaximumDuration = 60
+                    self.imagePicker.videoQuality = .typeIFrame960x540
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                } else {
+                    self.postAlert("Rear camera doesn't exist", message: "Application cannot access the camera.")
+                }
+            } else {
+                self.postAlert("Camera inaccessable", message: "Application cannot access the camera.")
+            }
+        })
+        
+        let shareApp = UIAlertAction(title: "Upload from library 📲", style: .default, handler: { (action) -> Void in
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePickerController.mediaTypes = ["public.movie"]
+            self.present(imagePickerController, animated: true, completion: nil)
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        activityViewController.addAction(contactCreaterButton)
+        activityViewController.addAction(shareApp)
+        activityViewController.addAction(cancelButton)
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("play video")
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 2.1) / 2.1
-        return CGSize(width: width, height: 180)
+        return CGSize(width: width, height: 250)
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
@@ -47,6 +111,7 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
     }
+    let getSelectedCategoryTextDelegate: getSelectedCategoryText? = nil
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
@@ -55,8 +120,13 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         // Makes cell corners round
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
+        
+        
+        
         return cell
     }
+    
+  
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height
@@ -86,4 +156,5 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     }
     
     
+ 
 }

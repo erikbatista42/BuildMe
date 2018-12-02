@@ -9,8 +9,12 @@
 import UIKit
 import Firebase
 
+protocol getSelectedCategoryText {
+    func getCategory(text: String)
+}
+
 class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-   
+    let getSelectedCategoryTextDelegate: getSelectedCategoryText! = nil
     /*
      What is UICollectionViewDelegateFlowLayout?
          The methods of this protocol define the:
@@ -61,16 +65,16 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         return 10
     }
     
-    let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
+    static let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories.count
+        return HomeController.categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
-        cell.categoryLabel.text = categories[indexPath.row]
-        
+        cell.categoryLabel.text = HomeController.categories[indexPath.row]
+        getSelectedCategoryTextDelegate?.getCategory(text: HomeController.categories[indexPath.row])
         return cell
     }
     
