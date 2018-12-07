@@ -13,6 +13,10 @@ protocol getSelectedCategoryText {
     func getCategory(text: String)
 }
 
+protocol CanMakeNoise {
+    func makeNoise()
+}
+
 class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     let getSelectedCategoryTextDelegate: getSelectedCategoryText! = nil
     /*
@@ -31,12 +35,13 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
+    static let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         
-        /*We break them into function to:
+        /* We break them into function to:
         - Avoid polluting viewDidLoad
         - making the code more organizable
          */
@@ -47,6 +52,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoController = VideosController()
         self.navigationController?.pushViewController(videoController, animated: true)
+        VideosController.navTitle = HomeController.categories[indexPath.row]
     }
     
 
@@ -64,8 +70,10 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+//    var cell: UICollectionViewCell!
     
-    static let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
+    
+    static var cat: String!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return HomeController.categories.count
@@ -74,7 +82,10 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
         cell.categoryLabel.text = HomeController.categories[indexPath.row]
-        getSelectedCategoryTextDelegate?.getCategory(text: HomeController.categories[indexPath.row])
+        HomeController.cat = HomeController.categories[indexPath.row]
+//        navigationItem.title =
+        let word = HomeController.categories[indexPath.row]
+//        VideosController.navTitle = word
         return cell
     }
     

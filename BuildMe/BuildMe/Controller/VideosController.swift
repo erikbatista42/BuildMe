@@ -11,26 +11,35 @@ import UIKit
 import AVFoundation
 import MobileCoreServices
 
-class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate, getSelectedCategoryText {
-
+class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate, getSelectedCategoryText, CanMakeNoise {
+    var noise: String?
+    
+    func makeNoise() {
+        print("moo")
+        noise = "moo"
+    }
     
 
-
     let imagePicker: UIImagePickerController! = UIImagePickerController()
-     let saveFileName = "/test.mp4"
+    let saveFileName = "/test.mp4"
     
     var collectionView: UICollectionView!
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
+    
+    static var navTitle: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBtn))
+//        print(VideosController.navTitle)
+        self.navigationItem.title = VideosController.navTitle
         
+//        makeNoise()
+//        print(noise)
         setupCollectionView()
-        
     }
     
     func getCategory(text: String) {
@@ -87,6 +96,11 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         // present the view controller
         self.present(activityViewController, animated: true, completion: nil)
     }
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print(123)
+    }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
@@ -111,6 +125,7 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 7
     }
+    
     let getSelectedCategoryTextDelegate: getSelectedCategoryText? = nil
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -120,13 +135,9 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         // Makes cell corners round
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
-        
-        
-        
+//        print("this ",HomeController.categories[indexPath.row])
         return cell
     }
-    
-  
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height
@@ -155,6 +166,4 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         view.addSubview(collectionView)
     }
     
-    
- 
 }
