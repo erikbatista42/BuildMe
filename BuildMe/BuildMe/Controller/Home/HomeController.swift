@@ -10,17 +10,9 @@ import UIKit
 import Firebase
 
 class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    /*
-     What is UICollectionViewDelegateFlowLayout?
-         The methods of this protocol define the:
-         - size of items & spacing between items in the grid
-     
-     What is UICollectionViewDataSource?
-        • Is responsible for providing the data and views required by a collection view.
-        • A data source object represents your app’s data model and vends information to the collection view as needed.
-    */
+
     
-    // We declare collectionView as a global variable here because we might mess around with the collection view in different functions
+    // We declare collectionView as a global variable here because we mess around with the collection view in different functions
     var collectionView: UICollectionView!
     
     let flowLayout = UICollectionViewFlowLayout()
@@ -32,10 +24,6 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         
-        /* We break them into function to:
-        - Avoid polluting viewDidLoad
-        - making the code more organizable
-         */
         setupCollectionView()
         setupNavigationController()
     }
@@ -78,22 +66,16 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         // Use this property to extend the space between your content and the edges of the content view.
         collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
         
-        // method to tell the collection view how to create a new cell of the given type
-        
         collectionView.register(HomeControllerCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
-        // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
+        // Delegate - behavior (What happens when it is tapped, when double tapped, if you hold it etc..
+        // DataSource - customization (color, height, width, rounded corners etc..
         collectionView.delegate = self
-        
-        // The dataSource is the customization of a cell (color, height, width, rounded corners etc..
         collectionView.dataSource = self
-        
+
         collectionView.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-        
-        // hides vertical scroll bar  - it shows (true) by default
         collectionView?.showsVerticalScrollIndicator = false
         
-        //  Here, we add the collectionView as a subview to the superView. You can only have one superView. Check this out to get a better understanding of what this comment is trying to say: https://goo.gl/images/TQ4mti
         view.addSubview(collectionView)
     }
     

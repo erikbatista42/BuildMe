@@ -13,7 +13,6 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
     
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.text = "Mechanicsss"
         label.font = UIFont(name: "Helvetica-Medium", size: 28)
         label.backgroundColor = .green
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -76,8 +75,6 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
         categoryInformationStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40).isActive = true
         categoryInformationStackView.heightAnchor.constraint(equalToConstant: 200)
     }
-    
-   
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
