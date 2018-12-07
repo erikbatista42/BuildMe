@@ -20,6 +20,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
     // prolly delete this later
     let saveFileName = "/test.mp4"
+    var fbURL: String = "https://firebasestorage.googleapis.com/v0/b/buildme-b0040.appspot.com/o/Carpentry%2FXbmpOPX45peRqC8FJ9xT.mp4?alt=media&token=ef4d4173-5145-486d-8de2-b6154bef451d"
     
     // Objects for CollectionView
     var collectionView: UICollectionView!

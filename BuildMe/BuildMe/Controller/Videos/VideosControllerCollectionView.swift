@@ -12,6 +12,8 @@ import AVKit
 // Make VideosController collectionView
 extension VideosController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+   
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
         cell.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
@@ -24,8 +26,8 @@ extension VideosController: UICollectionViewDelegateFlowLayout, UICollectionView
     
     // TODO: Play video functionality
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoURL = URL(string: "https://firebasestorage.googleapis.com/v0/b/buildme-b0040.appspot.com/o/Carpentry%2FXbmpOPX45peRqC8FJ9xT.mp4?alt=media&token=ef4d4173-5145-486d-8de2-b6154bef451d")
-        let player = AVPlayer(url: videoURL!)
+        let link = URL(string: fbURL ?? "")
+        let player = AVPlayer(url: link!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
         self.present(playerViewController, animated: true) {
