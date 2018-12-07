@@ -93,7 +93,6 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         // Create path to store video link
         let videoDatabaseRef = Database.database().reference().child("\(VideosController.currentCategory ?? "")").childByAutoId()
         
-        
         // File located on library
         guard let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
         
@@ -114,7 +113,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
                     // write to db
                     guard let downloadUrl = url else { return }
                     let valuesDB = ["video": "\(downloadUrl)"]
-                    
+//                    let valuesDB = ["video": "\(downloadUrl)", "futureTextFeature": "stuff from video like title or something"]
                     videoDatabaseRef.updateChildValues(valuesDB) { (error, ref) in
                         if let error = error {
                             print("Something went wrong writing to the database....: \(error.localizedDescription)")
