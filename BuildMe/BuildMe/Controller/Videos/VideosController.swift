@@ -27,6 +27,12 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     let cellId = "cellId"
     
     static var currentCategory: String!
+    
+    var posts = [Post]()
+    
+    fileprivate func fetchPost() {
+//        let ref
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +44,8 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         setupCollectionView()
         self.imagePicker.delegate = self
     }
+    
+    
     
     @objc func handleAddVideoBarBtnItem() {
         let activityViewController = UIAlertController()

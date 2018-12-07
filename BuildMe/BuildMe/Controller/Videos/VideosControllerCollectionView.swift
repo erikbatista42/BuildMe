@@ -7,6 +7,7 @@
 //
 import UIKit
 import Foundation
+import AVKit
 
 // Make VideosController collectionView
 extension VideosController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -23,7 +24,13 @@ extension VideosController: UICollectionViewDelegateFlowLayout, UICollectionView
     
     // TODO: Play video functionality
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("play video")
+        let videoURL = URL(string: "https://firebasestorage.googleapis.com/v0/b/buildme-b0040.appspot.com/o/Carpentry%2FXbmpOPX45peRqC8FJ9xT.mp4?alt=media&token=ef4d4173-5145-486d-8de2-b6154bef451d")
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
