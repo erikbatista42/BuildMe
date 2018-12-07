@@ -12,8 +12,9 @@ import AVFoundation
 import MobileCoreServices
 import Firebase
 import FirebaseStorage
+import FirebaseDatabase
 
-class VideosController: UIViewController {
+class VideosController: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
     
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     
@@ -35,7 +36,7 @@ class VideosController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
         
         setupCollectionView()
-        self.imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        self.imagePicker.delegate = self
     }
     
     @objc func handleAddVideoBarBtnItem() {
@@ -49,7 +50,7 @@ class VideosController: UIViewController {
                     self.imagePicker.sourceType = .camera
                     self.imagePicker.mediaTypes = [kUTTypeMovie as String]
                     self.imagePicker.allowsEditing = true
-                    self.imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+                    self.imagePicker.delegate = self
                     
                     self.imagePicker.videoMaximumDuration = 60
                     self.imagePicker.videoQuality = .typeIFrame960x540
@@ -65,7 +66,7 @@ class VideosController: UIViewController {
         let uploadFromLibraryButton = UIAlertAction(title: "Upload from library 📲", style: .default, handler: { (action) -> Void in
             let imagePickerController = UIImagePickerController()
             imagePickerController.sourceType = .photoLibrary
-            imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePickerController.delegate = self
             imagePickerController.mediaTypes = ["public.movie"]
             self.present(imagePickerController, animated: true, completion: nil)
             
@@ -87,17 +88,41 @@ class VideosController: UIViewController {
         dismiss(animated: true, completion: nil)
 
         // Create path to store video in Firebase Storage
-        let ref = Storage.storage().reference().child("\(VideosController.currentCategory ?? "")/" + makeRandomString(length: 20) + ".mp4")
+        let videoStorageRef = Storage.storage().reference().child("\(VideosController.currentCategory ?? "")/" + makeRandomString(length: 20) + ".mp4")
+        
+        // Create path to store video link
+        let videoDatabaseRef = Database.database().reference().child("\(VideosController.currentCategory ?? "")").childByAutoId()
+        
         
         // File located on library
         guard let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
         
         // Upload the file to the created path
-        ref.putFile(from: videoUrl, metadata: nil, completion: { (metdata, error) in
+        videoStorageRef.putFile(from: videoUrl, metadata: nil, completion: { (metdata, error) in
             if let error = error {
                 print("ERROR -> VideosController.didFinishPickingMediaWithInfo: \(error.localizedDescription)")
             } else {
                 print("upload successful")
+                
+                videoStorageRef.downloadURL(completion: { (url, error) in
+                    // if error happens
+                    guard url != nil else {
+                        print(error?.localizedDescription as Any)
+                        return
+                    }
+                    
+                    // write to db
+                    guard let downloadUrl = url else { return }
+                    let valuesDB = ["video": "\(downloadUrl)"]
+                    
+                    videoDatabaseRef.updateChildValues(valuesDB) { (error, ref) in
+                        if let error = error {
+                            print("Something went wrong writing to the database....: \(error.localizedDescription)")
+                        } else {
+                            print("successfully wrote to database")
+                        }
+                    }
+                })
                 
                 // Generate Thumbnail
                 let asset: AVAsset = AVAsset(url: videoUrl)
@@ -133,9 +158,7 @@ class VideosController: UIViewController {
         })
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
+    
     
 }
 

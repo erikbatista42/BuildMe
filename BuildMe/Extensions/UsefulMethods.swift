@@ -9,14 +9,14 @@
 import UIKit
 
 extension UIViewController {
-    
+
     // Used for creating a unique filename
     func makeRandomString(length: Int) -> String {
         let letters: NSString = "abcdefghijklmnopqrtstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let len = Int32(letters.length)
-        
+
         var randomString = ""
-        
+
         for _ in 0 ..< length {
             let random = arc4random_uniform(UInt32(len))
             var nextCharacter = letters.character(at: Int(random))
@@ -24,7 +24,7 @@ extension UIViewController {
         }
         return randomString
     }
-    
+
     // Create alerts easier
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
