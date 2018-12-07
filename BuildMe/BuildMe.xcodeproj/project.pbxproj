@@ -12,6 +12,8 @@
 		E1F8BDE1AE65C91BC9309435 /* Pods_BuildMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D90B88239945F4E57A5A5D3 /* Pods_BuildMe.framework */; };
 		FE1E2E7C21A76AA300F7D8F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE1E2E7B21A76AA300F7D8F2 /* GoogleService-Info.plist */; };
 		FE1E2E7F21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1E2E7E21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift */; };
+		FE37E8A621BA75730025F6F9 /* VideosControllerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37E8A521BA75730025F6F9 /* VideosControllerCollectionView.swift */; };
+		FE37E8A921BA7FF70025F6F9 /* UsefulMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE37E8A821BA7FF70025F6F9 /* UsefulMethods.swift */; };
 		FE8B9663219CB1F6009DE6D8 /* VideosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8B9662219CB1F6009DE6D8 /* VideosController.swift */; };
 		FEF87DB621976A1900EFAD77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF87DB521976A1900EFAD77 /* AppDelegate.swift */; };
 		FEF87DB821976A1900EFAD77 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF87DB721976A1900EFAD77 /* HomeController.swift */; };
@@ -51,6 +53,8 @@
 		EFBD8C4774EF12E8D353F7E7 /* Pods_BuildMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BuildMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE1E2E7B21A76AA300F7D8F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FE1E2E7E21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerCollectionViewCell.swift; sourceTree = "<group>"; };
+		FE37E8A521BA75730025F6F9 /* VideosControllerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosControllerCollectionView.swift; sourceTree = "<group>"; };
+		FE37E8A821BA7FF70025F6F9 /* UsefulMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsefulMethods.swift; sourceTree = "<group>"; };
 		FE8B9662219CB1F6009DE6D8 /* VideosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosController.swift; sourceTree = "<group>"; };
 		FEF87DB221976A1900EFAD77 /* BuildMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEF87DB521976A1900EFAD77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +130,23 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		FE37E8A421BA75450025F6F9 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				FE8B9662219CB1F6009DE6D8 /* VideosController.swift */,
+				FE37E8A521BA75730025F6F9 /* VideosControllerCollectionView.swift */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
+		FE37E8A721BA7FB70025F6F9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FE37E8A821BA7FF70025F6F9 /* UsefulMethods.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		FE8B9664219CB6C5009DE6D8 /* Google */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				FEF87DB421976A1900EFAD77 /* BuildMe */,
+				FE37E8A721BA7FB70025F6F9 /* Extensions */,
 				FEF87DC921976A1A00EFAD77 /* BuildMeTests */,
 				FEF87DD421976A1A00EFAD77 /* BuildMeUITests */,
 				FEF87DB321976A1900EFAD77 /* Products */,
@@ -225,7 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				FE1E2E7D21A76BA700F7D8F2 /* Home */,
-				FE8B9662219CB1F6009DE6D8 /* VideosController.swift */,
+				FE37E8A421BA75450025F6F9 /* Videos */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -462,6 +484,8 @@
 			files = (
 				FEF87DB821976A1900EFAD77 /* HomeController.swift in Sources */,
 				FE1E2E7F21A76BDC00F7D8F2 /* HomeControllerCollectionViewCell.swift in Sources */,
+				FE37E8A621BA75730025F6F9 /* VideosControllerCollectionView.swift in Sources */,
+				FE37E8A921BA7FF70025F6F9 /* UsefulMethods.swift in Sources */,
 				FEF87DE421976BBF00EFAD77 /* Docs.string.swift in Sources */,
 				FEF87DB621976A1900EFAD77 /* AppDelegate.swift in Sources */,
 				FE8B9663219CB1F6009DE6D8 /* VideosController.swift in Sources */,
