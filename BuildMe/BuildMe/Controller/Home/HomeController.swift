@@ -35,7 +35,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
-    static let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
+    let categories = ["Craft", "Origami", "Food", "Carpentry", "Mechanics", "Other"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoController = VideosController()
         self.navigationController?.pushViewController(videoController, animated: true)
-        VideosController.navTitle = HomeController.categories[indexPath.row]
+        VideosController.navTitle = categories[indexPath.row]
     }
     
 
@@ -76,15 +76,15 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     static var cat: String!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return HomeController.categories.count
+        return categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
-        cell.categoryLabel.text = HomeController.categories[indexPath.row]
-        HomeController.cat = HomeController.categories[indexPath.row]
+        cell.categoryLabel.text = categories[indexPath.row]
+        HomeController.cat = categories[indexPath.row]
 //        navigationItem.title =
-        let word = HomeController.categories[indexPath.row]
+        categories[indexPath.row]
 //        VideosController.navTitle = word
         return cell
     }

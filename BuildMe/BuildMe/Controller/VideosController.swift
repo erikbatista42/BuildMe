@@ -11,14 +11,7 @@ import UIKit
 import AVFoundation
 import MobileCoreServices
 
-class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate, getSelectedCategoryText, CanMakeNoise {
-    var noise: String?
-    
-    func makeNoise() {
-        print("moo")
-        noise = "moo"
-    }
-    
+class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate {
 
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     let saveFileName = "/test.mp4"
@@ -34,18 +27,12 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBtn))
-//        print(VideosController.navTitle)
+
         self.navigationItem.title = VideosController.navTitle
-        
-//        makeNoise()
-//        print(noise)
+
         setupCollectionView()
     }
-    
-    func getCategory(text: String) {
-        print(123)
-        print("Category selected: " + text)
-    }
+
     
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,
@@ -135,7 +122,6 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         // Makes cell corners round
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
-//        print("this ",HomeController.categories[indexPath.row])
         return cell
     }
     
