@@ -119,7 +119,40 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
                 print("ERROR -> VideosController.didFinishPickingMediaWithInfo: \(error.localizedDescription)")
             } else {
                 print("upload successful")
-            }
+                
+//                // GenerateThumbnail
+                let asset: AVAsset = AVAsset(url: videoUrl)
+                let imageGenerator = AVAssetImageGenerator(asset: asset)
+                imageGenerator.appliesPreferredTrackTransform = true
+                var time = asset.duration
+                time.value = min(time.value, 3)
+//
+                do {
+                    let thumbnailImage = try imageGenerator.copyCGImage(at: time , actualTime: nil)
+                    let image = UIImage(cgImage: thumbnailImage)
+                    guard let imageData = image.pngData() else { return }
+
+                    if image.pngData() != nil {
+                        print("Image data: \(imageData)")
+                    } else {
+                        print("IMG DATA IS NIL")
+                    }
+//
+                    let thumbnailStorageRef = Storage.storage().reference().child("thumbnails/" + self.randomString(length: 20) + ".png")
+                
+                    thumbnailStorageRef.putData(imageData, metadata: nil, completion: { (thumbnailMeta, error) in
+                        if let error = error {
+                            print("An error has occured while uploading thumbnail to firebase: \(error.localizedDescription)")
+                        } else {
+//                            let thumbnailUrl = thumbnailMeta.
+                            print("Thumbnail created successful")
+                        }
+                    })
+//            })
+                } catch {
+                    print("An error has occured while making the thumbnail")
+                }
+           }
         })
     }
     
@@ -130,8 +163,6 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("play video")
     }
-    
-    
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height
