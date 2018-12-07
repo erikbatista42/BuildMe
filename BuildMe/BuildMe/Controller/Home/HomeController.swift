@@ -9,16 +9,7 @@
 import UIKit
 import Firebase
 
-protocol getSelectedCategoryText {
-    func getCategory(text: String)
-}
-
-protocol CanMakeNoise {
-    func makeNoise()
-}
-
 class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    let getSelectedCategoryTextDelegate: getSelectedCategoryText! = nil
     /*
      What is UICollectionViewDelegateFlowLayout?
          The methods of this protocol define the:
@@ -55,25 +46,18 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         VideosController.navTitle = categories[indexPath.row]
     }
     
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 2.1) / 2.1
         return CGSize(width: width, height: 180)
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-//    var cell: UICollectionViewCell!
-    
-    
-    static var cat: String!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
@@ -82,10 +66,6 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
         cell.categoryLabel.text = categories[indexPath.row]
-        HomeController.cat = categories[indexPath.row]
-//        navigationItem.title =
-        categories[indexPath.row]
-//        VideosController.navTitle = word
         return cell
     }
     
