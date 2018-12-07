@@ -43,7 +43,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let videoController = VideosController()
         self.navigationController?.pushViewController(videoController, animated: true)
-        VideosController.navTitle = categories[indexPath.row]
+        VideosController.currentCategory = categories[indexPath.row]
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

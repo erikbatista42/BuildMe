@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 import AVFoundation
 import MobileCoreServices
+import Firebase
+import FirebaseStorage
 
-class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate {
+class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     let saveFileName = "/test.mp4"
@@ -20,19 +22,7 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     let flowLayout = UICollectionViewFlowLayout()
     let cellId = "cellId"
     
-    static var navTitle: String!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBtn))
-
-        self.navigationItem.title = VideosController.navTitle
-
-        setupCollectionView()
-    }
-
+    static var currentCategory: String!
     
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,
@@ -44,7 +34,7 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
     @objc func handleAddVideoBtn() {
         let activityViewController = UIAlertController()
         
-        let contactCreaterButton = UIAlertAction(title: "Shoot a tutorial 📹", style: .default, handler: { (action) -> Void in
+        let recordButton = UIAlertAction(title: "Shoot a tutorial 📹", style: .default, handler: { (action) -> Void in
             if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
                 if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                     
@@ -64,28 +54,73 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
             }
         })
         
-        let shareApp = UIAlertAction(title: "Upload from library 📲", style: .default, handler: { (action) -> Void in
+        let uploadFromLibraryButton = UIAlertAction(title: "Upload from library 📲", style: .default, handler: { (action) -> Void in
             let imagePickerController = UIImagePickerController()
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
             imagePickerController.mediaTypes = ["public.movie"]
             self.present(imagePickerController, animated: true, completion: nil)
+            
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             print("Cancel button tapped")
         })
         
-        activityViewController.addAction(contactCreaterButton)
-        activityViewController.addAction(shareApp)
+        activityViewController.addAction(recordButton)
+        activityViewController.addAction(uploadFromLibraryButton)
         activityViewController.addAction(cancelButton)
         
         // present the view controller
         self.present(activityViewController, animated: true, completion: nil)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBtn))
+
+        self.navigationItem.title = VideosController.currentCategory
+        self.imagePicker.delegate = self
+
+        setupCollectionView()
+    }
+    
+    func randomString(length: Int) -> String {
+        let letters: NSString = "abcdefghijklmnopqrtstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        let len = Int32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let random = arc4random_uniform(UInt32(len))
+            var nextCharacter = letters.character(at: Int(random))
+            randomString += NSString(characters: &nextCharacter, length: 1) as String
+        }
+        return randomString
+    }
+    
+    
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(123)
+        // Upload selected video to firebase
+        dismiss(animated: true, completion: nil)
+        
+        // Create reference to upload video to it's place on Firebase
+        let ref = Storage.storage().reference().child("\(VideosController.currentCategory ?? "")/" + randomString(length: 20) + ".mp4")
+        
+        // File located on library
+        guard let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
+        print("video URL: ", videoUrl)
+        
+        // upload the file to the path
+        _ = ref.putFile(from: videoUrl, metadata: nil, completion: { (metdata, error) in
+            if let error = error {
+                print("ERROR -> VideosController.didFinishPickingMediaWithInfo: \(error.localizedDescription)")
+            } else {
+                print("upload successful")
+            }
+        })
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -96,34 +131,7 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         print("play video")
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width - 2.1) / 2.1
-        return CGSize(width: width, height: 250)
-    }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
-    }
-    
-    let getSelectedCategoryTextDelegate: getSelectedCategoryText? = nil
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        
-        // Makes cell corners round
-        cell.layer.masksToBounds = true
-        cell.layer.cornerRadius = 15
-        return cell
-    }
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height
@@ -150,6 +158,35 @@ class VideosController: UIViewController, UICollectionViewDelegateFlowLayout, UI
         
         //  Here, we add the collectionView as a subview to the superView. You can only have one superView. Check this out to get a better understanding of what this comment is trying to say: https://goo.gl/images/TQ4mti
         view.addSubview(collectionView)
+        
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 2.1) / 2.1
+        return CGSize(width: width, height: 250)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        
+        // Makes cell corners round
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 15
+        return cell
     }
     
 }
