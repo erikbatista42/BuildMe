@@ -19,9 +19,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     
-    // prolly delete this later
-    let saveFileName = "/test.mp4"
-    var fbURL: String = "https://firebasestorage.googleapis.com/v0/b/buildme-b0040.appspot.com/o/Carpentry%2FXbmpOPX45peRqC8FJ9xT.mp4?alt=media&token=ef4d4173-5145-486d-8de2-b6154bef451d"
+
     
     // Objects for CollectionView
     var collectionView: UICollectionView!
@@ -35,54 +33,31 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         self.navigationItem.title = VideosController.currentCategory
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddVideoBarBtnItem))
         
-        view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
-        
         self.imagePicker.delegate = self
         setupCollectionView()
         fetchPosts()
     }
     
 
-    var posts = [Post]()
-//    var op: [String] = []
+    
     var videoDownloadLinks = [String]()
-//    var videoThumbnailLinks = [String]()
+    var videoThumbnailLinks = [String]()
+    
      func fetchPosts() {
         let ref = Database.database().reference().child("\(VideosController.currentCategory ?? "")/")
-//        var tempo = [Post]()
-//        ref.observe(.childAdded, with: { (snapshot) in
-//
-//            print(snapshot.value ?? "")
-//            guard let dictionary = snapshot.value as? [String: Any] else { return }
-//            let video = Post(videoUrl: "videoUrl", dictionary: dictionary)
-////            self.posts.append(video)
-//            print("printing urls....: \(self.posts.count)")
-//            self.posts.insert(video, at: 0)
-//            tempo.insert(video, at: 0)
-//            print("tempo: \(tempo)")
-//
-//        }) { (error) in
-//            print(error.localizedDescription)
-//        }
-//        self.collectionView.reloadData()
-//        print("postsss: \(tempo.count)")
-        
-        // GET FIREBASE VIDEOS
         
         ref.observe(.childAdded, with: { snapshot in
             
             let postDict = snapshot.value as? [String : AnyObject] ?? [:]
             
-            
             let videoDownloadURL = postDict["videoUrl"]!
-//            let videoThumbnail = postDict["thumbnail"]!
+            let videoThumbnail = postDict["thumbnailUrl"]!
             
             self.videoDownloadLinks.insert(videoDownloadURL as! String, at: 0)
-//            self.videoThumbnailLinks.insert(videoThumbnail as! String, at: 0)
-            print(self.videoDownloadLinks.count)
+            self.videoThumbnailLinks.insert(videoThumbnail as! String, at: 0)
+            
             self.collectionView.reloadData()
         })
-        
     }
     
     @objc func handleAddVideoBarBtnItem() {
@@ -196,6 +171,26 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
                             print("An error has occured while uploading thumbnail to firebase: \(error.localizedDescription)")
                         } else {
                             print("Thumbnail created successful")
+                            
+                            thumbnailStorageRef.downloadURL(completion: { (url, error) in
+                                // if error happens
+                                guard url != nil else {
+                                    print(error?.localizedDescription as Any)
+                                    return
+                                }
+                                // write to db
+                                 guard let thumbnailDownloadUrl = url else { return }
+                                let thumbnailValueDB = ["thumbnailUrl": "\(thumbnailDownloadUrl)"]
+                                
+                                videoDatabaseRef.updateChildValues(thumbnailValueDB) { (error, ref) in
+                                    if let error = error {
+                                        print("Something went wrong writing the thumbnail to the database....: \(error.localizedDescription)")
+                                    } else {
+                                        print("successfully wrote to database")
+                                    }
+                                }
+                                
+                            })
                         }
                     })
                 } catch {
@@ -217,9 +212,9 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
     // TODO: Play the right video functionality
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("thisss: \(posts)")
-        let links = posts[indexPath.row]
-        guard let url = NSURL(string: links.videoUrl) else { return }
+
+        let links = videoDownloadLinks[indexPath.row]
+        guard let url = NSURL(string: links) else { return }
         let player = AVPlayer(url: url as URL)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
