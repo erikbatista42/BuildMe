@@ -41,7 +41,7 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
     
     let backgroundImage: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .red
+//        iv.backgroundColor = .red
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true

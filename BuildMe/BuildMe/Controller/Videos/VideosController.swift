@@ -44,25 +44,44 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
 
     var posts = [Post]()
-    fileprivate func fetchPosts() {
+//    var op: [String] = []
+    var videoDownloadLinks = [String]()
+//    var videoThumbnailLinks = [String]()
+     func fetchPosts() {
         let ref = Database.database().reference().child("\(VideosController.currentCategory ?? "")/")
-        var tempo = [Post]()
-        ref.observe(.childAdded, with: { (snapshot) in
+//        var tempo = [Post]()
+//        ref.observe(.childAdded, with: { (snapshot) in
+//
+//            print(snapshot.value ?? "")
+//            guard let dictionary = snapshot.value as? [String: Any] else { return }
+//            let video = Post(videoUrl: "videoUrl", dictionary: dictionary)
+////            self.posts.append(video)
+//            print("printing urls....: \(self.posts.count)")
+//            self.posts.insert(video, at: 0)
+//            tempo.insert(video, at: 0)
+//            print("tempo: \(tempo)")
+//
+//        }) { (error) in
+//            print(error.localizedDescription)
+//        }
+//        self.collectionView.reloadData()
+//        print("postsss: \(tempo.count)")
+        
+        // GET FIREBASE VIDEOS
+        
+        ref.observe(.childAdded, with: { snapshot in
             
-            print(snapshot.value ?? "")
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            let video = Post(videoUrl: "videoUrl", dictionary: dictionary)
-//            self.posts.append(video)
-            print("printing urls....: \(self.posts.count)")
-            self.posts.insert(video, at: 0)
-            tempo.insert(video, at: 0)
-            print("tempo: \(tempo)")
+            let postDict = snapshot.value as? [String : AnyObject] ?? [:]
             
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-        self.collectionView.reloadData()
-        print("postsss: \(tempo.count)")
+            
+            let videoDownloadURL = postDict["videoUrl"]!
+//            let videoThumbnail = postDict["thumbnail"]!
+            
+            self.videoDownloadLinks.insert(videoDownloadURL as! String, at: 0)
+//            self.videoThumbnailLinks.insert(videoThumbnail as! String, at: 0)
+            print(self.videoDownloadLinks.count)
+            self.collectionView.reloadData()
+        })
         
     }
     
@@ -117,7 +136,10 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         let videoStorageRef = Storage.storage().reference().child("\(VideosController.currentCategory ?? "")/" + makeRandomString(length: 20) + ".mp4")
         
         // Create path to store video link
-        let videoDatabaseRef = Database.database().reference().child("\(VideosController.currentCategory ?? "")").childByAutoId()
+        
+        let timeStamp = Int(NSDate.timeIntervalSinceReferenceDate*1000)
+        
+        let videoDatabaseRef = Database.database().reference().child("\(VideosController.currentCategory ?? "")/\(timeStamp)")
         
         // File located on library
         guard let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL else { return }
@@ -220,7 +242,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return videoDownloadLinks.count
     }
     
     func setupCollectionView() {
