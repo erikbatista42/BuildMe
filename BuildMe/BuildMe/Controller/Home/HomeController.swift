@@ -22,7 +22,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         setupCollectionView()
         setupNavigationController()
@@ -54,6 +54,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
         cell.categoryLabel.text = categories[indexPath.row]
+        cell.backgroundImage.image = UIImage(named: "\(categories[indexPath.row]).jpg")
         return cell
     }
     
@@ -73,7 +74,7 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        collectionView.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        collectionView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         collectionView?.showsVerticalScrollIndicator = false
         
         view.addSubview(collectionView)
@@ -82,7 +83,11 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func setupNavigationController() {
         let navBar = navigationController?.navigationBar
         navBar?.isTranslucent = false
-        self.navigationItem.title = "BuildMe"
+        navBar?.barTintColor = #colorLiteral(red: 0.9813231826, green: 0.9813460708, blue: 0.9813337922, alpha: 1)
+        navBar?.tintColor = #colorLiteral(red: 0.2823529412, green: 0.2980392157, blue: 0.368627451, alpha: 1)
+        let logo = UIImage(named: "BUILDME.png")
+        let imageView = UIImageView(image:logo)
+        self.navigationItem.titleView = imageView
     }
 
 

@@ -14,7 +14,8 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
     let categoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica-Medium", size: 28)
-        label.backgroundColor = .green
+//        label.backgroundColor = .green
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -22,12 +23,29 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
     
     let numberOfVideosLabel: UILabel = {
         let label = UILabel()
-        label.text = "# videos"
+        label.text = "3 videos"
         label.font = UIFont(name: "Helvetica", size: 17)
-        label.backgroundColor = .yellow
+//        label.backgroundColor = .yellow
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
+    }()
+    
+    let blurView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "blurbg.png")!)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let backgroundImage: UIImageView = {
+        let iv = UIImageView()
+        iv.backgroundColor = .red
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        return iv
     }()
     
     override init(frame: CGRect) {
@@ -70,10 +88,23 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
             return stackView
         }()
         
+        addSubview(backgroundImage)
+        backgroundImage.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        backgroundImage.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+        backgroundImage.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        backgroundImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        
+        addSubview(blurView)
+        blurView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        blurView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+        blurView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        blurView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        
         addSubview(categoryInformationStackView)
         categoryInformationStackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         categoryInformationStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40).isActive = true
         categoryInformationStackView.heightAnchor.constraint(equalToConstant: 200)
+
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -13,8 +13,9 @@ import MobileCoreServices
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import AVKit
 
-class VideosController: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
+class VideosController: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     
@@ -29,12 +30,6 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
     static var currentCategory: String!
     
-    var posts = [Post]()
-    
-    fileprivate func fetchPost() {
-//        let ref
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = VideosController.currentCategory
@@ -42,11 +37,34 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         
         view.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
         
-        setupCollectionView()
         self.imagePicker.delegate = self
+        setupCollectionView()
+        fetchPosts()
     }
     
-    
+
+    var posts = [Post]()
+    fileprivate func fetchPosts() {
+        let ref = Database.database().reference().child("\(VideosController.currentCategory ?? "")/")
+        var tempo = [Post]()
+        ref.observe(.childAdded, with: { (snapshot) in
+            
+            print(snapshot.value ?? "")
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let video = Post(videoUrl: "videoUrl", dictionary: dictionary)
+//            self.posts.append(video)
+            print("printing urls....: \(self.posts.count)")
+            self.posts.insert(video, at: 0)
+            tempo.insert(video, at: 0)
+            print("tempo: \(tempo)")
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        self.collectionView.reloadData()
+        print("postsss: \(tempo.count)")
+        
+    }
     
     @objc func handleAddVideoBarBtnItem() {
         let activityViewController = UIAlertController()
@@ -78,7 +96,6 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
             imagePickerController.delegate = self
             imagePickerController.mediaTypes = ["public.movie"]
             self.present(imagePickerController, animated: true, completion: nil)
-            
         })
         
         let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
@@ -121,7 +138,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
                     
                     // write to db
                     guard let downloadUrl = url else { return }
-                    let valuesDB = ["video": "\(downloadUrl)"]
+                    let valuesDB = ["videoUrl": "\(downloadUrl)"]
 //                    let valuesDB = ["video": "\(downloadUrl)", "futureTextFeature": "stuff from video like title or something"]
                     videoDatabaseRef.updateChildValues(valuesDB) { (error, ref) in
                         if let error = error {
@@ -167,6 +184,71 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = #colorLiteral(red: 0.2941176471, green: 0.3098039216, blue: 0.3882352941, alpha: 1)
+        // Makes cell corners round
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 15
+        return cell
+    }
+    
+    // TODO: Play the right video functionality
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("thisss: \(posts)")
+        let links = posts[indexPath.row]
+        guard let url = NSURL(string: links.videoUrl) else { return }
+        let player = AVPlayer(url: url as URL)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (view.frame.width - 2.1) / 2.1
+        return CGSize(width: width, height: 250)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func setupCollectionView() {
+        let navBarSize = navigationController?.navigationBar.frame.height
+        let calculateHeightOfCollectionView = view.bounds.height - navBarSize! - 12.5
+        let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: calculateHeightOfCollectionView)
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: flowLayout)
+        
+        // Use this property to extend the space between your content and the edges of the content view.
+        collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
+        
+        // method to tell the collection view how to create a new cell of the given type
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
+        collectionView.delegate = self
+        
+        // The dataSource is the customization of a cell (color, height, width, rounded corners etc..
+        collectionView.dataSource = self
+        
+        collectionView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // hides vertical scroll bar  - it shows (true) by default
+        collectionView?.showsVerticalScrollIndicator = false
+        
+        //  Here, we add the collectionView as a subview to the superView. You can only have one superView. Check this out to get a better understanding of what this comment is trying to say: https://goo.gl/images/TQ4mti
+        view.addSubview(collectionView)
+    }
     
 }
 
