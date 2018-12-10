@@ -50,11 +50,11 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
             
             let postDict = snapshot.value as? [String : AnyObject] ?? [:]
             
-            let videoDownloadURL = postDict["videoUrl"]!
-            let videoThumbnail = postDict["thumbnailUrl"]!
+            let videoDownloadURL = postDict["videoUrl"]
+            let videoThumbnail = postDict["thumbnailUrl"]
             
-            self.videoDownloadLinks.insert(videoDownloadURL as! String, at: 0)
-            self.videoThumbnailLinks.insert(videoThumbnail as! String, at: 0)
+            self.videoDownloadLinks.insert(videoDownloadURL as? String ?? "", at: 0)
+            self.videoThumbnailLinks.insert(videoThumbnail as? String ?? "", at: 0)
             
             self.collectionView.reloadData()
         })
