@@ -1,4 +1,7 @@
 PODS:
+  - Alamofire (4.8.0)
+  - AlamofireImage (3.5.0):
+    - Alamofire (~> 4.8)
   - Crashlytics (3.11.1):
     - Fabric (~> 1.8.1)
   - Fabric (1.8.2)
@@ -69,6 +72,7 @@ PODS:
   - nanopb/encode (0.3.901)
 
 DEPENDENCIES:
+  - AlamofireImage (~> 3.5)
   - Crashlytics (~> 3.11.1)
   - Fabric (~> 1.8.2)
   - Firebase/Core
@@ -77,6 +81,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireImage
     - Crashlytics
     - Fabric
     - Firebase
@@ -93,6 +99,8 @@ SPEC REPOS:
     - nanopb
 
 SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   Firebase: 9190018e296139d938b99521cde0c15a6e8d2946
@@ -108,6 +116,6 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
 
-PODFILE CHECKSUM: b93ae4ac0c8c365c59ef00cdafb4d3e98ba97e92
+PODFILE CHECKSUM: 9fc62a94179506f6e1728de6381fe1a122831aeb
 
 COCOAPODS: 1.5.3

@@ -14,6 +14,7 @@ import Firebase
 import FirebaseStorage
 import FirebaseDatabase
 import AVKit
+import AlamofireImage
 
 class VideosController: UIViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
@@ -202,11 +203,16 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = #colorLiteral(red: 0.2941176471, green: 0.3098039216, blue: 0.3882352941, alpha: 1)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! VideosControllerCollectionViewCell
+//        cell.backgroundColor = #colorLiteral(red: 0.2941176471, green: 0.3098039216, blue: 0.3882352941, alpha: 1)
         // Makes cell corners round
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 15
+        
+        let photoURL = URL(string: videoThumbnailLinks[indexPath.row])
+        let ranURL = URL(string: "http://www.huh.com")
+        cell.backgroundImage.af_setImage(withURL: photoURL ?? ranURL!)
+        
         return cell
     }
     
@@ -250,7 +256,7 @@ class VideosController: UIViewController, UIImagePickerControllerDelegate , UINa
         collectionView.contentInset = UIEdgeInsets(top: 15, left: 6, bottom: 15, right: 6)
         
         // method to tell the collection view how to create a new cell of the given type
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(VideosControllerCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
         // The delegate is the behavior of a cell (What happens when it is tapped, when double tapped, if you hold it etc..
         collectionView.delegate = self
