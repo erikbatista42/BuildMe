@@ -54,9 +54,23 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomeControllerCollectionViewCell
         cell.categoryLabel.text = categories[indexPath.row]
+        
         cell.backgroundImage.image = UIImage(named: "\(categories[indexPath.row]).jpg")
+        
+        let ref = Database.database().reference().child("\(categories[indexPath.row])/")
+        
+        ref.observe(.value, with: { (snapshot) in
+            
+            let numOfChildrens = snapshot.childrenCount
+//            print("\(self.categories[indexPath.row]): \(numOfChildrens)")
+            cell.numberOfVideosLabel.text = "\(numOfChildrens) videos"
+        }) { (error) in
+            print("failed to fetch num of posts: ",error.localizedDescription)
+        }
         return cell
     }
+    
+   
     
     func setupCollectionView() {
         let navBarSize = navigationController?.navigationBar.frame.height

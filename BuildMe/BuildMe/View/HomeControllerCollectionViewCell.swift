@@ -23,7 +23,7 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
     
     let numberOfVideosLabel: UILabel = {
         let label = UILabel()
-        label.text = "3 videos"
+        label.text = ""
         label.font = UIFont(name: "Helvetica", size: 17)
 //        label.backgroundColor = .yellow
         label.textColor = .white
