@@ -79,9 +79,10 @@ class HomeControllerCollectionViewCell: UICollectionViewCell {
 //        let categoryInfo = UIStackView(arrangedSubviews: [categoryLabel,numberOfVideosLabel])
         
         let categoryInformationStackView: UIStackView = {
-            let stackView = UIStackView(arrangedSubviews: [categoryLabel,numberOfVideosLabel])
+            let stackView = UIStackView(arrangedSubviews: [categoryLabel, numberOfVideosLabel])
             categoryLabel.widthAnchor.constraint(equalToConstant: 100)
             categoryLabel.heightAnchor.constraint(equalToConstant: 200)
+            categoryLabel.font = UIFont(name: "Helvetica-Medium", size: 28)
             stackView.axis = .vertical
             stackView.backgroundColor = .red
             stackView.translatesAutoresizingMaskIntoConstraints = false

@@ -57,6 +57,8 @@ class HomeController: UIViewController, UICollectionViewDelegateFlowLayout, UICo
         
         cell.backgroundImage.image = UIImage(named: "\(categories[indexPath.row]).jpg")
         
+        
+        // Get number of videos in each cell
         let ref = Database.database().reference().child("\(categories[indexPath.row])/")
         
         ref.observe(.value, with: { (snapshot) in
